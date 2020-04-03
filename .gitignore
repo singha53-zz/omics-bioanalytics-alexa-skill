@@ -60,5 +60,5 @@ typings/
 
 .DS_Store
 ./lambda/custom/node_modules
-./.ask/
+.ask/
 ./lambda/custom/.env
