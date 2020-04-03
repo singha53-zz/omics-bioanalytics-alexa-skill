@@ -1,0 +1,47 @@
+{
+  "manifest": {
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom",
+          "uri": "omics-bioanalytics"
+        },
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL"
+          },
+          {
+            "type": "AUDIO_PLAYER"
+          },
+          {
+            "type": "CAN_FULFILL_INTENT_REQUEST"
+          },
+          {
+            "type": "RENDER_TEMPLATE"
+          },
+          {
+            "type": "VIDEO_APP"
+          }
+        ]
+      }
+    },
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "omics-bioanalytics",
+          "summary": "Voice-enabled bioinformatics analyses.",
+          "description": "After upload data on Omics BioAnalytics, the data is processed and the results (not data files) are stored in S3 and DynamoDB. These are queried using Alexa using voice-based commands.",
+          "examplePhrases": [
+            "Alexa open omics bioanalytics",
+            "Alexa start omics bioanalytics"
+          ]
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Sample Testing Instructions.",
+      "category": "EDUCATION_AND_REFERENCE",
+      "distributionCountries": []
+    }
+  }
+}

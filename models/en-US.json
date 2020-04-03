@@ -1,0 +1,197 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "omics bioanalytics",
+      "intents": [
+        {
+          "name": "PhoneNumberIntent",
+          "samples": [
+            "{mobileNumber}",
+            "my phone number is {mobileNumber}"
+          ],
+          "slots": [
+            {
+              "name": "mobileNumber",
+              "type": "AMAZON.PhoneNumber"
+            }
+          ]
+        },
+        {
+          "name": "AnalysisIntent",
+          "samples": [
+            "{analysis}"
+          ],
+          "slots": [
+              {
+                "name": "analysis",
+                "type": "analysisType"
+              }
+          ]
+        },
+        {
+          "name": "SpecificAnalysisIntent",
+          "samples": [
+            "{specificAnalysis}"
+          ],
+          "slots": [
+              {
+                "name": "specificAnalysis",
+                "type": "AMAZON.NUMBER"
+              }
+          ]
+        },
+        {
+          "name": "FDRIntent",
+          "samples": [
+            "F D R equals {falsediscovery} percent",
+            "F D R equal to {falsediscovery} percent",
+            "F D R of {falsediscovery} percent",
+            "F D R equals {falsediscovery}",
+            "F D R equal to {falsediscovery}",
+            "F D R of {falsediscovery}",
+            "false discovery equals {falsediscovery} percent",
+            "false discovery equal to {falsediscovery} percent",
+            "false discovery of {falsediscovery} percent",
+            "false discovery equals {falsediscovery}",
+            "false discovery equal to {falsediscovery}",
+            "false discovery rate of {falsediscovery}",
+            "false discovery rate equals {falsediscovery} percent",
+            "false discovery rate equal to {falsediscovery} percent",
+            "false discovery rate of {falsediscovery} percent",
+            "false discovery rate equals {falsediscovery}",
+            "false discovery rate equal to {falsediscovery}",
+            "false discovery rate of {falsediscovery}"
+          ],
+          "slots": [
+              {
+                "name": "falsediscovery",
+                "type": "AMAZON.NUMBER"
+              }
+          ]
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+              "restart",
+              "start over",
+              "new order"
+          ]
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PreviousIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollUpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollDownIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollLeftIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollRightIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateSettingsIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.MoreIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PageDownIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PageUpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        }
+      ],
+      "types": [
+        {
+          "name": "analysisType",
+          "values": [
+            {
+              "name": {
+                "value": "metadata",
+                "synonyms": [
+                  "demographics",
+                  "demo",
+                  "analyze metadata",
+                  "analyze demographics",
+                  "analyze demographic variables",
+                  "clinical",
+                  "clinical data",
+                  "analyze clinical data",
+                  "clinical variables",
+                  "analyze clinical variables",
+                  "phenotypic data",
+                  "analyze phenotypic data"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "eda",
+                "synonyms": [
+                  "e. d. a.",
+                  "exploratory data analysis",
+                  "run p. c. a.",
+                  "principal component analysis"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "dexp",
+                "synonyms": [
+                  "d. e.",
+                  "differential expression",
+                  "differential expression analysis",
+                  "limma",
+                  "run limma",
+                  "volcano plots"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
