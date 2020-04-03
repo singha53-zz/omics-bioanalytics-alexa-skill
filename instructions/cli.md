@@ -1,4 +1,4 @@
-# Build An Alexa Pet Match Skill
+# Build the Omics BioAnalytics Alexa Skill
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
 ## Setup w/ ASK CLI
@@ -75,4 +75,4 @@ ASK CLI **will create the skill and the lambda function for you**.
 	```
 
 # References
-- I used this [skill](https://github.com/alexa/skill-sample-nodejs-petmatch/blob/master/instructions/7-cli.md) as a template.
+- I used the [Pet Match Alexa Skill](https://github.com/alexa/skill-sample-nodejs-petmatch/blob/master/instructions/7-cli.md) as a template.
