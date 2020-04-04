@@ -71,12 +71,12 @@ module.exports = {
       
       if(sessionAttributes.id === ''){
         return handlerInput.responseBuilder
-        .speak('This is ohmiks bioanalytics. I can help you place an order. I can help your perform some bioinformatics analysis on your data. Please say the seven digit code to access your analysis.')
+        .speak('This is ohmiks bioanalytics. I can help your perform some bioinformatics analysis on your data. Please say the seven digit code to access your analysis.')
         .reprompt('Please say the seven digit code to access your analysis.')
         .getResponse();
       } else {
         return handlerInput.responseBuilder
-        .speak('This is ohmiks bioanalytics. I can help you place an order. I can help your perform some bioinformatics analysis on your data. Which analysis would you like to begin with? You can say, analyze metadata, exploratory data analysis or differential expression analysis.')
+        .speak('This is ohmiks bioanalytics. I can help your perform some bioinformatics analysis on your data. Which analysis would you like to begin with? You can say, analyze metadata, exploratory data analysis or differential expression analysis.')
         .reprompt('Please say the name of the analysis you would like to perform.')
         .getResponse();
       }
@@ -121,7 +121,7 @@ module.exports = {
           })
 
       return handlerInput.responseBuilder
-        .speak('This is ohmiks bioanalytics. I can help you place an order. I can help your perform some bioinformatics analysis on your data. Please say the seven digit code to access your analysis.')
+        .speak('This is ohmiks bioanalytics. I can help your perform some bioinformatics analysis on your data. Please say the seven digit code to access your analysis.')
         .reprompt('Please say the seven digit code to access your analysis.')
         .addDirective({
           type: 'Alexa.Presentation.APL.RenderDocument',

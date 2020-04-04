@@ -17,6 +17,7 @@ exports.handler = skillBuilder
     analysis.AnalysisIntentHandler,
     analysis.SpecificAnalysisIntentHandler,
     analysis.FDRIntentHandler,
+    analysis.MainMenuIntentHandler,
     common.HelpHandler,
     common.FallbackHandler,
     common.ExitHandler,

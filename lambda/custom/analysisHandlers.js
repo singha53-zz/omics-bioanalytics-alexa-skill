@@ -1,16 +1,23 @@
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
 const S3Bucket = "omics-bioanalytics";
+const helperFuncs = require('./helpers/funcs.js');
+
+// Constants
+let COUNTER_metadata = 0;
+let COUNTER_eda = 0;
+let COUNTER_dexp = 0;
+let COUNTER_fdr = 0;
 
 // APL templates
 const metadataListTemplate = require('./templates/metadata_list.json')
 const metadataItemTemplate = require('./templates/metadata_item.js')
+const selectAnalysisTemplate = require('./templates/selectAnalysis.js')
 
 // APL data
 const metadataListData = require('./data/metadata_list.js')
 const metadataItemData = require('./data/metadata_item.json')
-
-const helperFuncs = require('./helpers/funcs.js');
+const selectAnalysisData = require('./data/selectAnalysis.json')
 
 module.exports = {
   AnalysisIntentHandler: {
@@ -25,7 +32,8 @@ module.exports = {
       
       let speechText = 'Please repeat your request.';
       if(analysisType === "metadata"){
-        speechText = `Say the number of the variable you would like me to analyze. ${sessionAttributes.selectedAnalysis === ""? "You can scroll down with your finger if the list is too long" : ""}`
+        speechText = COUNTER_metadata === 0 ? `Say the number of the variable you would like me to analyze. You can scroll down with your finger if the list is too long. At anytime please say main menu to see all analysis options` : "Say the number of the variable you would like me to analyze.";
+        COUNTER_metadata++
         sessionAttributes.selectedAnalysis = 'ds'
         const ds_variables = Object.keys(sessionAttributes.analysis.ds);
 
@@ -42,7 +50,8 @@ module.exports = {
         .getResponse();
 
       } else if(analysisType === "eda"){
-        speechText = "Say the number of the dataset you would like me to perform Principal Component Analysis on."
+        speechText = COUNTER_eda === 0 ? `Say the number of the dataset you would like me to perform Principal Component Analysis on. At anytime please say main menu to see all analysis options.` : "Say the number of the dataset you would like me to analyze.";
+        COUNTER_eda++
         sessionAttributes.selectedAnalysis = 'eda'
         const eda_datasets = Object.keys(sessionAttributes.analysis.eda);
 
@@ -59,7 +68,8 @@ module.exports = {
         .getResponse();
 
       } else if(analysisType === "dexp"){
-        speechText = "Say the number of the dataset you would like me to perform Differential Expression Analysis on."
+        speechText = COUNTER_dexp === 0 ? `Say the number of the dataset you would like me to perform Differential Expression Analysis on. At anytime please say main menu to see all analysis options.` : "Say the number of the dataset you would like me to analyze.";
+        COUNTER_dexp++
         sessionAttributes.selectedAnalysis = 'dexp'
         const dexp_datasets = Object.keys(sessionAttributes.analysis.dexp);
         
@@ -103,7 +113,7 @@ module.exports = {
       const sessionAttributes = attributesManager.getSessionAttributes();
       const analysisType = sessionAttributes.selectedAnalysis;
       const upperLimit = Object.keys(sessionAttributes.analysis[analysisType]).length;
-      const slotValid = isSlotValid(intent, upperLimit);
+      const slotValid = helperFuncs.isSlotValid(intent, upperLimit);
 
       const analysisTypeSpeak = {
         "ds": "metadata",
@@ -111,16 +121,18 @@ module.exports = {
         "dexp": "differential expression analysis"
       }
 
+      let speechTest = ''
       if (slotValid){
         const chosenValue = parseInt(intent.slots.specificAnalysis.value, 10)-1;
         const item = Object.keys(sessionAttributes.analysis[analysisType])[chosenValue];
         const itemContents = sessionAttributes.analysis[analysisType][item];
-        const speechText = `I analyzed the data for ${item}. Please say ${analysisTypeSpeak[analysisType]} to return to the previous menu.`
+        speechText = `I analyzed the data for ${item}. Please say ${analysisTypeSpeak[analysisType]} to return to the previous menu.`
         
         console.log("itemContents")
         console.log(itemContents)
         let plotUrl = '';
         if(analysisType === "dexp"){
+          speechText = `I analyzed the data for ${item}. You can change the false discovery rate. For example, by saying false discovery rate of five percent.`
           sessionAttributes.chosenValue = chosenValue
           plotUrl = s3.getSignedUrl('getObject', {
           Bucket: S3Bucket,
@@ -196,7 +208,7 @@ module.exports = {
       } else if(analysisType === "dexp" && [0.01, 0.05, 0.1, 0.2].indexOf(fdr) != -1) {
       const item = Object.keys(sessionAttributes.analysis[analysisType])[chosenValue];
       const itemContents = sessionAttributes.analysis[analysisType][item];
-      speechText = `Please see the updated analysis based on an F D R of ${100*fdr} percent. You can say another false discovery rate or say main menu to return to see all analysis options.`
+      speechText = COUNTER_metadata === 0 ? `Please see the updated analysis based on an F D R of ${100*fdr} percent. You can say another false discovery rate or say main menu to return to see all analysis options.` : `Please see the updated analysis based on an F D R of ${100*fdr} percent.`;
       sessionAttributes.fdr = fdr.toString()
       const plotUrl = s3.getSignedUrl('getObject', {
         Bucket: S3Bucket,
@@ -230,6 +242,30 @@ module.exports = {
         .speak(speechText)
         .reprompt(speechText)
         .getResponse();
+    }
+  },
+  MainMenuIntentHandler: {
+    canHandle(handlerInput) {
+      const request = handlerInput.requestEnvelope.request;
+      return request.type === 'IntentRequest' && request.intent.name === 'MainMenuIntent'
+    },
+    handle(handlerInput) {
+      const { requestEnvelope, attributesManager, responseBuilder } = handlerInput;
+      const { intent } = requestEnvelope.request;
+      const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+      const speechText = "Let’s perform some bioinformatics analysis on your data. Which analysis would you like to begin with?"
+      return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .addDirective({
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.1',
+        token: "mainmenu",
+        document: selectAnalysisTemplate(sessionAttributes.id),
+        datasources: selectAnalysisData
+      })
+      .getResponse();
     }
   }
 }

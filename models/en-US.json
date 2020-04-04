@@ -70,6 +70,12 @@
           ]
         },
         {
+          "name": "MainMenuIntent",
+          "samples": [
+              "main menu"
+          ]
+        },
+        {
           "name": "AMAZON.StartOverIntent",
           "samples": [
               "restart",

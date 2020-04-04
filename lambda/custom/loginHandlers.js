@@ -53,7 +53,7 @@ module.exports = {
       request.intent.name === 'PhoneNumberIntent'
     },
     async handle(handlerInput) {
-       const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+      const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
       // extract phone number
       const myPhoneNumber = handlerInput.requestEnvelope.request.intent.slots.mobileNumber.value;
